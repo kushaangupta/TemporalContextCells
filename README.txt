@@ -57,7 +57,11 @@ LDATemporalDecoder_leave_cells_out_FINAL.m: Runs a LDA analysis multiple times,
     Runs on cleaned_data_v1.mat and uses finalparameters.csv to identify the
     relaxation times
 
+<<<<<<< HEAD
+DATA (Too Large To Upload to Git. Data is availble here: https://drive.google.com/file/d/14VGkJu8nZl3aBbQKlKuDksqik_qjCnAn/view?usp=sharing )
+=======
 DATA
+>>>>>>> 4b9b143a5bd49f7a76082c3950ed7e5f4e054f54
 
 cleaned_data_v1.mat: Reformatted version of "theData180329.mat" that is in
 	the correct format to be used by the maximum likelihood code. Only
