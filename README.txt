@@ -25,15 +25,16 @@ ML_fit_init_v5.m: Similar to ML_fit_init_v2.m, but used to fit the ideal
 	
 ML_fit_params_v2.m: Uses maximum likelihood approach to determine
 	if a cell has a temporal response profile. Used before adding in Even/Odd.
+	Runs in Matlab/2016a.
 	
 ML_fit_params_v2_EO: Similar to ML_fit_params_v2.m, but set up to determine
-	if cells are significantly fit for both even and odd trials.
+	if cells are significantly fit for both even and odd trials. Runs in Matlab/2016a
 
 ML_fit_params_v4.m: Similar to ML_fit_params_v2.m, but used to fit the ideal
-	time cells.
+	time cells. Runs in Matlab/2016a
 	
 ML_fit_params_v5.m: Similar to ML_fit_params_v2.m, but used to fit the ideal
-	temporal context cells.
+	temporal context cells. Runs in Matlab/2016a
 
 process_ideal.m: Used to process the results of ML_fit_params_v4.m and
 	ML_fit_params_v5.m for the ideal cells.
@@ -57,11 +58,13 @@ LDATemporalDecoder_leave_cells_out_FINAL.m: Runs a LDA analysis multiple times,
     Runs on cleaned_data_v1.mat and uses finalparameters.csv to identify the
     relaxation times
 
-<<<<<<< HEAD
-DATA (Too Large To Upload to Git. Data is availble here: https://drive.google.com/file/d/14VGkJu8nZl3aBbQKlKuDksqik_qjCnAn/view?usp=sharing )
-=======
-DATA
->>>>>>> 4b9b143a5bd49f7a76082c3950ed7e5f4e054f54
+
+DATA 
+
+(Some of the output files from the maximum likelihood fits were too large to upload to git. 
+	Those files are marked with a "*" in this document and can be downloaded at the following 
+	link: https://drive.google.com/file/d/14VGkJu8nZl3aBbQKlKuDksqik_qjCnAn/view?usp=sharing )
+
 
 cleaned_data_v1.mat: Reformatted version of "theData180329.mat" that is in
 	the correct format to be used by the maximum likelihood code. Only
@@ -79,15 +82,15 @@ lag_cos_means_CIs.csv: Holds the error bar info for the lag analysis.
 MaxFiringRate.mat: Contains the max average firing rate for each cell. Used for
 	normalization in "loop_process_ML_results.m"
 
-ML_Results: Contains the results of running ML_fit_params_v2 on each cell.
+ML_Results*: Contains the results of running ML_fit_params_v2 on each cell.
 
-ML_Results_EO: Contains the results of running ML_fit_params_v2_EO on only those
+ML_Results_EO*: Contains the results of running ML_fit_params_v2_EO on only those
 	with a significant temporal response (before even/odd requirement).
 
-ML_Results_TC: Contains the results of running ML_fit_params_v4 on the 
+ML_Results_TC*: Contains the results of running ML_fit_params_v4 on the 
 	ideal time cells.
 	
-ML_Results_TCC: Contains the results of running ML_fit_params_v5 on the
+ML_Results_TCC*: Contains the results of running ML_fit_params_v5 on the
 	ideal temporal context cells.
 
 ParameterCorrelations.jasp: Contains the results of the Bayesian Kendall's 
