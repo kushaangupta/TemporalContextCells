@@ -57,6 +57,8 @@ LDATemporalDecoder_leave_cells_out_FINAL.m: Runs a LDA analysis multiple times,
     Used to generate Figure 3
     Runs on cleaned_data_v1.mat and uses finalparameters.csv to identify the
     relaxation times
+    
+ vec2struct.m: Converts a vector into a structure
 
 
 DATA 
