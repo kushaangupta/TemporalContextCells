@@ -43,110 +43,112 @@ ML_fit_init_v2
 %Finds all the parameters for the EC units
 %Units 238-245 are hippocampal
 for i = [1:237 246:357]
-    
-    %Prints what unit is it on
-    cell_no=i
-    
-    %Loads the fit for the given unit i
-    load(sprintf('%s/glm_cell_%i_v_%i.mat',params.folder_mat,cell_no,params.plot_version))
-    
-    %Checks if a version of the convolution model fit the spikes better
-    %than the constant
-    if  (max(T) > 0.003) && ((pValue < .05/349) || (pValue_I < .05/349))
-        %Checks if negative or positive EMG was the better model
-        if (LL_I < LL_T)
-            %Positive EMG is winner
-            if xT(5) > 0.001
-                %Stores unit sigma
-                EMGsigs(EMGcount) = xT(2);
-                %Stores unit mu
-                %Need to move t=0 back to actual 0.
-                EMGmus(EMGcount) = xT(3) + 2.25;
-                %Stores unit tau
-                %Report as 1/tau in model
-                EMGtaus(EMGcount) = 1/xT(4);
-                %Stores baseline firing rate
-                EMGcons(EMGcount) = xT(1);
-                %Stores unit peak height
-                EMGpeak(EMGcount) = xT(5);
-                %Stores the unit index
-                EMGindex(EMGcount) = i;
-                %Increases iterator
-                EMGcount = EMGcount + 1;
-            end
-        else
-            %Negative EMG is the winner
-            if xI(5) < -0.001
-                %Stores unit sigma
-                EMGsigs(EMGcount) = xI(2);
-                %Stores unit mu
-                %Need to move t=0 back to actual 0.
-                EMGmus(EMGcount) = xI(3) + 2.25;
-                %Stores unit tau
-                %Report as 1/tau in model
-                EMGtaus(EMGcount) = 1/xI(4);
-                %Stores baseline firing rate
-                EMGcons(EMGcount) = xI(1);
-                %Stores the unit peak height
-                EMGpeak(EMGcount) = xI(5);
-                %Stores the unit index
-                EMGindex(EMGcount) = i;
-                %Increases iterator
-                EMGcount = EMGcount + 1;
-            end
-        end
-    end
-    
-    %Checks if a version of the Gaussian model fit the spikes better
-    %than the constant
-    
-    if max(G) > 0.003 && (pValue_G < .05/349 || pValue_IG < .05/349)
-        %Checks if negative or positive Gauss was the better model
-        if (LL_IG < LL_G)
-            %Positive Gauss is winner
-            if xG(5) > 0.001
-                %Stores unit sigma
-                Gsigs(Gcount) = xG(2);
-                %Stores unit mu
-                %Need to move t=0 back to actual 0.
-                Gmus(Gcount) = xG(3) + 2.25;
-                %Stores unit tau
-                %Unit tau does not exist for Gaussian
-                Gtaus(Gcount) = NaN;
-                %Stores baseline firing rate
-                Gcons(Gcount) = xG(1);
-                %Stores unit peak height
-                Gpeak(Gcount) = xG(5);
-                %Stores the unit index
-                Gindex(Gcount) = i;
-                %Increases iterator
-                Gcount = Gcount + 1;
-            end
-        else
-            %Negative Gaussian is the winner
-            if xIG(5) < -0.001
-                %Stores unit sigma
-                Gsigs(Gcount) = xIG(2);
-                %Stores unit mu
-                %Need to move t=0 back to actual 0.
-                Gmus(Gcount) = xIG(3) + 2.25;
-                %Stores unit tau
-                %Unit tau does not exist for Gaussian
-                Gtaus(Gcount) = 1/xIG(4);
-                %Stores baseline firing rate
-                Gcons(Gcount) = xIG(1);
-                %Stores the unit peak height
-                Gpeak(Gcount) = xIG(5);
-                %Stores the unit index
-                Gindex(Gcount) = i;
-                %Increases iterator
-                Gcount = Gcount + 1;
+    try
+        %Prints what unit is it on
+        cell_no=i
+        
+        %Loads the fit for the given unit i
+        load(sprintf('%s/glm_cell_%i_v_%i.mat',params.folder_mat,cell_no,params.plot_version))
+        params.folder_mat = '../ML_Results';
+        
+        %Checks if a version of the convolution model fit the spikes better
+        %than the constant
+        if  (max(T) > 0.003) && ((pValue < .05/349) || (pValue_I < .05/349))
+            %Checks if negative or positive EMG was the better model
+            if (LL_I < LL_T)
+                %Positive EMG is winner
+                if xT(5) > 0.001
+                    %Stores unit sigma
+                    EMGsigs(EMGcount) = xT(2);
+                    %Stores unit mu
+                    %Need to move t=0 back to actual 0.
+                    EMGmus(EMGcount) = xT(3) + 2.25;
+                    %Stores unit tau
+                    %Report as 1/tau in model
+                    EMGtaus(EMGcount) = 1/xT(4);
+                    %Stores baseline firing rate
+                    EMGcons(EMGcount) = xT(1);
+                    %Stores unit peak height
+                    EMGpeak(EMGcount) = xT(5);
+                    %Stores the unit index
+                    EMGindex(EMGcount) = i;
+                    %Increases iterator
+                    EMGcount = EMGcount + 1;
+                end
+            else
+                %Negative EMG is the winner
+                if xI(5) < -0.001
+                    %Stores unit sigma
+                    EMGsigs(EMGcount) = xI(2);
+                    %Stores unit mu
+                    %Need to move t=0 back to actual 0.
+                    EMGmus(EMGcount) = xI(3) + 2.25;
+                    %Stores unit tau
+                    %Report as 1/tau in model
+                    EMGtaus(EMGcount) = 1/xI(4);
+                    %Stores baseline firing rate
+                    EMGcons(EMGcount) = xI(1);
+                    %Stores the unit peak height
+                    EMGpeak(EMGcount) = xI(5);
+                    %Stores the unit index
+                    EMGindex(EMGcount) = i;
+                    %Increases iterator
+                    EMGcount = EMGcount + 1;
+                end
             end
         end
+        
+        %Checks if a version of the Gaussian model fit the spikes better
+        %than the constant
+        
+        if max(G) > 0.003 && (pValue_G < .05/349 || pValue_IG < .05/349)
+            %Checks if negative or positive Gauss was the better model
+            if (LL_IG < LL_G)
+                %Positive Gauss is winner
+                if xG(5) > 0.001
+                    %Stores unit sigma
+                    Gsigs(Gcount) = xG(2);
+                    %Stores unit mu
+                    %Need to move t=0 back to actual 0.
+                    Gmus(Gcount) = xG(3) + 2.25;
+                    %Stores unit tau
+                    %Unit tau does not exist for Gaussian
+                    Gtaus(Gcount) = NaN;
+                    %Stores baseline firing rate
+                    Gcons(Gcount) = xG(1);
+                    %Stores unit peak height
+                    Gpeak(Gcount) = xG(5);
+                    %Stores the unit index
+                    Gindex(Gcount) = i;
+                    %Increases iterator
+                    Gcount = Gcount + 1;
+                end
+            else
+                %Negative Gaussian is the winner
+                if xIG(5) < -0.001
+                    %Stores unit sigma
+                    Gsigs(Gcount) = xIG(2);
+                    %Stores unit mu
+                    %Need to move t=0 back to actual 0.
+                    Gmus(Gcount) = xIG(3) + 2.25;
+                    %Stores unit tau
+                    %Unit tau does not exist for Gaussian
+                    Gtaus(Gcount) = 1/xIG(4);
+                    %Stores baseline firing rate
+                    Gcons(Gcount) = xIG(1);
+                    %Stores the unit peak height
+                    Gpeak(Gcount) = xIG(5);
+                    %Stores the unit index
+                    Gindex(Gcount) = i;
+                    %Increases iterator
+                    Gcount = Gcount + 1;
+                end
+            end
+        end
+    catch ME
+        fprintf('File not found for unit %d\n', cell_no);
+        continue;
     end
-    
-    
-    
 end
 
 
@@ -170,6 +172,7 @@ for i = EMGindex
         
         %Loads the fit for the given unit i
         load(sprintf('%s/glm_cell_%i_v_%i.mat',params.folder_mat,i,params.plot_version))
+        params.folder_mat = '../ML_Results';
         
         %Determine if EMG is positive or negative
         if(EMGpeak(EMG_ind) > 0)
@@ -237,14 +240,14 @@ G_Better_EMG = length(emgcelltau);
 parameters = [EMGindex; EMGmus; EMGsigs; EMGtaus; EMGpeak].';
 parameters = array2table(parameters, 'VariableNames', {'Unit', 'Mu', 'Sigma', 'Tau', 'Peak'});
 %Used by JASP
-writetable(parameters,'finalparameters.csv');
+writetable(parameters,'Data/finalparameters.csv');
 
 %Loads up the initialization script that generated the fits.
 ML_fit_init_v2_EO
 
 %Loads up the final parameters, even though they should already be loaded
 %Under its new name
-finalparams = readtable('finalparameters.csv','HeaderLines',1);
+finalparams = readtable('Data/finalparameters.csv','HeaderLines',1);
 finalparams = finalparams{:,:};
 %Track which cells pass
 pass = zeros(128,5);
@@ -257,6 +260,7 @@ for i = 1:128
     try
         %Loads the fit for the given unit i
         load(sprintf('%s/glm_cell_%i_v_%i.mat',params.folder_mat,cell_no,params.plot_version))
+        params.folder_mat = '../ML_Results';
     catch
     end
     %goes through the steps in The Salz and Tiganj
@@ -307,7 +311,7 @@ end
 
 parameters = array2table(finalparams, 'VariableNames', {'Unit', 'Mu', 'Sigma', 'Tau', 'Peak','rho'});
 %Used by JASP
-writetable(parameters,'finalparameters.csv');
+writetable(parameters,'Data/finalparameters.csv');
 
 %% Paragraph on basic fit results
 %This is the number of cells (out of 349) that were fit by the EMG model.
@@ -348,7 +352,7 @@ sigma_90_percent = quantile(finalparams(:,3), .9)
 %% Paragraph on Unit Correlation to Stimulus
 
 %Loads up dataset with stimulus information
-load('theData180329.mat')
+load('Data/theData180329.mat')
 %renames the data
 data = olddata;
 %Holds the unit correlations
@@ -696,7 +700,7 @@ end
     %% Population Similarity Analysis
     
     %Load up maximum firing rate information to normalize cells
-    load('MaxFiringRate.mat');
+    load('Data/MaxFiringRate.mat');
     %Holds when blocks start for each session
     start_index=[];
     %iterator
@@ -864,7 +868,7 @@ end
     %% NTCC Analysis
     
     %Load up maximum firing rate information to normalize cells
-    load('MaxFiringRate.mat');
+    load('Data/MaxFiringRate.mat');
     %Holds when blocks start for each session
     start_index=[];
     %iterator
@@ -1034,7 +1038,7 @@ end
     %TCC Cells
     
     %Load up maximum firing rate information to normalize cells
-    load('MaxFiringRate.mat');
+    load('Data/MaxFiringRate.mat');
     %Holds when blocks start for each session
     start_index=[];
     %iterator
@@ -1218,7 +1222,7 @@ end
     
     
     Bindex1 = sortrows(parameters,[4 6]);
-    load('f_average_buffalo.mat')
+    load('Data/f_average_buffalo.mat')
     % Heatplot sorted by tau
     font_size=16;
     clear f_time_cells_all f_time_cells_all_resid

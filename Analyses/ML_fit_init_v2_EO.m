@@ -5,19 +5,19 @@
 %What is N at
 
 %Adds some folders that the code needs to access.
-addpath(genpath('/project/ecog-eeg/stim_specific_time_cells/Buffalo/export_fig'));
-addpath(genpath('/projectnb/ecog-eeg/stim_specific_time_cells/Buffalo'));
+addpath(genpath('ecog-eeg/stim_specific_time_cells/Buffalo/export_fig'));
+addpath(genpath('ecog-eeg/stim_specific_time_cells/Buffalo'));
 %Do I want to generate a plot while running
 params.plot_on = 1;
 %Sets where the plots are saved
 params.folder_results = 'results_ML';
-params.folder_mat = '/projectnb/ecog-eeg/stim_specific_time_cells/Buffalo';
+params.folder_mat = '../ML_Results';
 %Significance level (Bonferoni Corrected)
 params.max_p = .05/349;
 %Version control
 params.plot_version = 220;
 %The data that we want to analyze
-params.data = 'cleaned_data_v1.mat'; 
+params.data = 'Data/cleaned_data_v1.mat'; 
 
 %This is how many times I want to fail to improve
 %the previous best fit before ending the code.
@@ -31,6 +31,6 @@ if params.submit
 else
     if params.plot_on
         %Gives filename of smoothed firing rate data
-        params.faverage = 'f_average_buffalo.mat';
+        params.faverage = 'Data/f_average_buffalo.mat';
     end
 end

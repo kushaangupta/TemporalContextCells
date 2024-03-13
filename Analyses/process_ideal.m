@@ -28,6 +28,7 @@ for i = 1:70
     try
     %Loads the fit for the given unit i
     load(sprintf('%s/glm_examp_exp_cell_%i_v_%i.mat',params.folder_mat,cell_no,params.plot_version))
+    params.folder_mat = '../ML_Results_TCC';
     
     %Checks if a version of the convolution model fit the spikes better
     %than the constant
@@ -71,6 +72,8 @@ for i = 2:51
     
     %Loads the fit for the given unit i
     load(sprintf('%s/glm_examp_exp_cell_%i_v_%i.mat',params.folder_mat,cell_no,params.plot_version))
+    params.folder_mat = '../ML_Results_TCC';
+
     
     tempp = reshape(f_spikes, [5000,1000]);
     smoothFRS((i-1),:) = smooth(mean(tempp,2));
@@ -93,6 +96,8 @@ for i = 2:51
     
     %Loads the fit for the given unit i
     load(sprintf('%s/glm_examp_time_cell_%i_v_%i.mat',params.folder_mat,cell_no,params.plot_version))
+    params.folder_mat = '../ML_Results_TC';
+
     
     tempp = reshape(f_spikes, [5000,1000]);
     smoothFRS((i-1),:) = smooth(mean(tempp,2));
@@ -109,19 +114,24 @@ figure()
 hold on
 iter = 0;
 for i = [63 53 43 33 23 13]
-
-%Prints what unit is it on
+    %Prints what unit is it on
     cell_no=i
-    
-    %Loads the fit for the given unit i
-    load(sprintf('%s/glm_examp_exp_cell_%i_v_%i.mat',params.folder_mat,cell_no,params.plot_version))
-    
-    tempp = reshape(f_spikes, [5000,1000]);
-    temppp = smooth(mean(tempp,2));
-    plot(1:5000, temppp, 'Color', [.6-iter .6-iter .6-iter], 'LineWidth', 1)
-    
-    
-    iter = iter + .1;
+    try
+        params.folder_mat = '../ML_Results_TCC';
+        %Loads the fit for the given unit i
+        load(sprintf('%s/glm_examp_exp_cell_%i_v_%i.mat',params.folder_mat,cell_no,params.plot_version))
+        params.folder_mat = '../ML_Results_TCC';
+        
+        tempp = reshape(f_spikes, [5000,1000]);
+        temppp = smooth(mean(tempp,2));
+        plot(1:5000, temppp, 'Color', [.6-iter .6-iter .6-iter], 'LineWidth', 1)
+        
+        
+        iter = iter + .1;
+    catch ME
+        fprintf('File not found for unit %d\n', cell_no)
+        continue;
+    end
 end
 
 ylim([0 .42])
@@ -162,6 +172,7 @@ for i = 1:45
     
     %Loads the fit for the given unit i
     load(sprintf('%s/glm_examp_time_cell_%i_v_%i.mat',params.folder_mat,cell_no,params.plot_version))
+    params.folder_mat = '../ML_Results_TC';
     
     %Checks if a version of the convolution model fit the spikes better
     %than the constant
@@ -211,8 +222,9 @@ for i = [45 36 27 18 9 1]
     
     %Loads the fit for the given unit i
     load(sprintf('%s/glm_examp_time_cell_%i_v_%i.mat',params.folder_mat,cell_no,params.plot_version))
+    params.folder_mat = '../ML_Results_TC';
     
-    tempp = reshape(f_spikes, [15000,1000]);
+    tempp = reshape(f_spikes, [5000,1000]);
     temppp = smooth(mean(tempp,2));
     plot(1:5000, temppp(1:5000), 'Color', hsv2rgb([0 .4+iter, 1]), 'LineWidth', 1.75)
     set(gca, 'XTick', 0:1000:5000)
@@ -229,22 +241,18 @@ for i = [45 36 27 18 9 1]
 end
 
 
-
-
 figure()
 plot(.001:.001:5, .7991*(.001:.001:5)-.4011, 'color', hsv2rgb([0 .4, 1]))
 hold on
 iter = 0;
 for i = [63 53 43 33 23 13]
-
-%Prints what unit is it on
+    %Prints what unit is it on
     cell_no=i
-    
-    
+
     scatter(Expmus(i),Exptaus(i), 80, [.6-iter .6-iter .6-iter],'filled')
     xlim([0 5])
     ylim([0 5])
-    
+
     iter = iter + .1;
 end
 
